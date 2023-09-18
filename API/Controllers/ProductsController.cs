@@ -1,5 +1,5 @@
-using API.Data;
-using API.Entities;
+using Core.Entities;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +17,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
+    
     public async Task<ActionResult<List<Product>>> GetProducts()
     {
         return await _context.Products.ToListAsync();
