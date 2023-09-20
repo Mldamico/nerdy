@@ -25,6 +25,8 @@ public class ProductsController : ControllerBase
     
     public async Task<ActionResult<List<Product>>> GetProducts()
     {
+        
+        
         return Ok(await _productsRepo.ListAllAsync());
     }
 
