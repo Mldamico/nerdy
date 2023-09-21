@@ -10,6 +10,8 @@ public class MappingProfiles: Profile
     {
         CreateMap<Product, ProductToReturnDto>()
             .ForMember(x => x.ProductBrand, opt => opt.MapFrom(x => x.ProductBrand.Name))
-            .ForMember(x => x.ProductType, opt => opt.MapFrom(x => x.ProductType.Name));
+            .ForMember(x => x.ProductType, opt => opt.MapFrom(x => x.ProductType.Name))
+            .ForMember(x => x.PictureUrl,o => o.MapFrom<ProductUrlResolver>());
+            
     }
 }
