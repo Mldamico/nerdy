@@ -1,5 +1,6 @@
 
 
+using API.Errors;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,7 @@ public class BuggyController : BaseController
     public ActionResult NotFoundRequest()
     {
         var thing = _context.Products.Find(5000);
-        if (thing == null) return NotFound();
+        if (thing == null) return NotFound(new ApiResponse(404));
         return Ok();
     }
     
@@ -33,7 +34,7 @@ public class BuggyController : BaseController
     [HttpGet("badrequest")]
     public ActionResult BadRequest()
     {
-        return BadRequest();
+        return BadRequest(new ApiResponse(400));
     }
     
     [HttpGet("badrequest/{id}")]
