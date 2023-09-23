@@ -10,7 +10,6 @@ public static class ApplicationServiceExtensions
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
     {
-
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddDbContext<StoreContext>(opt => { opt.UseSqlite(config.GetConnectionString("DefaultConnection")); });
@@ -32,6 +31,12 @@ public static class ApplicationServiceExtensions
 
                 return new BadRequestObjectResult(errorResponse);
             };
+        });
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy("CorsPolicy",
+                policy => { policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"); });
         });
 
         return services;
