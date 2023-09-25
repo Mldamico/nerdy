@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../shared/models/product';
 import { ShopService } from './shop.service';
+import { Brand } from '../shared/models/brand';
+import { Type } from '../shared/models/type';
 
 @Component({
   selector: 'app-shop',
@@ -8,14 +10,35 @@ import { ShopService } from './shop.service';
   styleUrls: ['./shop.component.scss']
 })
 export class ShopComponent implements OnInit {
-  products: Product[] = []
-
+  products: Product[] = [];
+  brands: Brand[] = [];
+  types: Type[] = [];
   constructor(private shopService: ShopService) { }
 
   ngOnInit(): void {
+    this.getBrands();
+    this.getTypes();
+    this.getProducts();
+  }
+
+  getProducts() {
     this.shopService.getProducts().subscribe({
       next: response => this.products = response.data,
       error: err => console.log(err)
-    })
+    });
+  }
+
+  getBrands() {
+    this.shopService.getBrands().subscribe({
+      next: response => this.brands = response,
+      error: err => console.log(err)
+    });
+  }
+
+  getTypes() {
+    this.shopService.getTypes().subscribe({
+      next: response => this.types = response,
+      error: err => console.log(err)
+    });
   }
 }
