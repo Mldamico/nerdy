@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Product } from '../shared/models/product';
 import { ShopService } from './shop.service';
 import { Brand } from '../shared/models/brand';
@@ -21,6 +21,7 @@ export class ShopComponent implements OnInit {
     { name: 'Price: High to low', value: 'priceDesc' },
   ];
   totalCount = 0;
+  @ViewChild('search') searchTerm?: ElementRef;
   constructor(private shopService: ShopService) { }
 
   ngOnInit(): void {
@@ -58,10 +59,12 @@ export class ShopComponent implements OnInit {
 
   onBrandSelected(brandId: number) {
     this.shopParams.brandId = brandId;
+    this.shopParams.pageNumber = 1;
     this.getProducts();
   }
   onTypeSelected(typeId: number) {
     this.shopParams.typeId = typeId;
+    this.shopParams.pageNumber = 1;
     this.getProducts();
   }
 
@@ -71,9 +74,21 @@ export class ShopComponent implements OnInit {
   }
 
   onPageChanged(event: any) {
-    if (this.shopParams.pageNumber !== event.page) {
-      this.shopParams.pageNumber = event.page;
+    if (this.shopParams.pageNumber !== event) {
+      this.shopParams.pageNumber = event;
       this.getProducts();
     }
+  }
+
+  onSearch() {
+    this.shopParams.search = this.searchTerm?.nativeElement.value;
+    this.shopParams.pageNumber = 1;
+    this.getProducts();
+  }
+
+  onReset() {
+    if (this.searchTerm) this.searchTerm.nativeElement.value = '';
+    this.shopParams = new ShopParams();
+    this.getProducts();
   }
 }
