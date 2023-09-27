@@ -7,7 +7,7 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
@@ -24,7 +24,6 @@ export class ErrorInterceptor implements HttpInterceptor {
               throw error.error;
             } else {
               this.toastr.error(error.error.message, error.status.toString());
-
             }
           }
           if (error.status === 401) {
@@ -34,7 +33,8 @@ export class ErrorInterceptor implements HttpInterceptor {
             this.router.navigateByUrl('/not-found');
           }
           if (error.status === 500) {
-            this.router.navigateByUrl('/server-error');
+            const navigationExtras: NavigationExtras = { state: { error: error.error } };
+            this.router.navigateByUrl('/server-error', navigationExtras);
           }
         }
         return throwError(() => new Error(error.message));
