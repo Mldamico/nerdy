@@ -3,6 +3,7 @@ using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 
 namespace API.Extensions;
 
@@ -32,7 +33,11 @@ public static class ApplicationServiceExtensions
                 return new BadRequestObjectResult(errorResponse);
             };
         });
-
+        services.AddSingleton<IConnectionMultiplexer>(c =>
+        {
+            var options = ConfigurationOptions.Parse(config.GetConnectionString("Redis"));
+            return ConnectionMultiplexer.Connect(options);
+        });
         services.AddCors(options =>
         {
             options.AddPolicy("CorsPolicy",
