@@ -1,12 +1,12 @@
 namespace Core.Entities;
 
-public class CostumerBasket
+public class CustomerBasket
 {
-    public CostumerBasket()
+    public CustomerBasket()
     {
         
     }
-    public CostumerBasket(string id)
+    public CustomerBasket(string id)
     {
         Id = id;
     }

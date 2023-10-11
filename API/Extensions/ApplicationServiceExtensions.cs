@@ -33,6 +33,7 @@ public static class ApplicationServiceExtensions
                 return new BadRequestObjectResult(errorResponse);
             };
         });
+        services.AddScoped<IBasketRepository, BasketRepository>();
         services.AddSingleton<IConnectionMultiplexer>(c =>
         {
             var options = ConfigurationOptions.Parse(config.GetConnectionString("Redis"));
