@@ -42,6 +42,9 @@
           },
           "defaultConfiguration": "production",
           "options": {
+            "allowedCommonJsDependencies": [
+              "cuid"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
