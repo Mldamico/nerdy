@@ -12,8 +12,7 @@ public static class ApplicationServiceExtensions
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
     {
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+
         services.AddDbContext<StoreContext>(opt => { opt.UseSqlite(config.GetConnectionString("DefaultConnection")); });
 
         services.AddScoped<IProductRepository, ProductRepository>();
