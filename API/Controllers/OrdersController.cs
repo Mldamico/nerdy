@@ -35,4 +35,29 @@ public class OrdersController : BaseController
 
         return Ok(order);
     }
+
+    [HttpGet]
+    public async Task<ActionResult<IReadOnlyList<Order>>> GetOrdersForUser()
+    {
+        var email = HttpContext.User.RetrieveEmailFromPrincipal();
+        var orders = await _orderService.GetOrdersForUserAsync(email);
+        return Ok(orders);
+    }
+
+    [HttpGet("id")]
+    public async Task<ActionResult<Order>> GetOrderByIdForUser(int id)
+    {
+        var email = HttpContext.User.RetrieveEmailFromPrincipal();
+        var orderById = await _orderService.GetOrderByIdAsync(id, email);
+
+        if (orderById == null) return NotFound(new ApiResponse(404));
+
+        return orderById;
+    }
+
+    [HttpGet("deliveryMethods")]
+    public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethods()
+    {
+        return Ok(await _orderService.GetDeliveryMethodsAsync());
+    }
 }
