@@ -12,12 +12,12 @@ public static class ApplicationServiceExtensions
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
     {
-
         services.AddDbContext<StoreContext>(opt => { opt.UseSqlite(config.GetConnectionString("DefaultConnection")); });
 
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IOrderService, OrderService>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.Configure<ApiBehaviorOptions>(options =>
