@@ -71,11 +71,15 @@ export class BasketService {
   private deleteBasket(basket: Basket) {
     return this.http.delete(this.baseUrl + `basket?id=${basket.id}`).subscribe({
       next: () => {
-        this.basketSource.next(null);
-        this.basketTotalSource.next(null);
-        localStorage.removeItem('basket_id');
+        this.deleteLocalBaset();
       },
     });
+  }
+
+  deleteLocalBaset() {
+    this.basketSource.next(null);
+    this.basketTotalSource.next(null);
+    localStorage.removeItem('basket_id');
   }
 
   private addOrUpdateItem(
