@@ -1,5 +1,11 @@
 import { Address } from './user';
 
+export interface OrderToCreate {
+  basketId: string;
+  deliveryMethodId: number;
+  shipToAddress: Address;
+}
+
 export interface Order {
   id: number;
   buyerEmail: string;
