@@ -8,7 +8,7 @@ import { ShopParams } from '../shared/models/shopParams';
 @Component({
   selector: 'app-shop',
   templateUrl: './shop.component.html',
-  styleUrls: ['./shop.component.scss']
+  styleUrls: ['./shop.component.scss'],
 })
 export class ShopComponent implements OnInit {
   products: Product[] = [];
@@ -22,7 +22,7 @@ export class ShopComponent implements OnInit {
   ];
   totalCount = 0;
   @ViewChild('search') searchTerm?: ElementRef;
-  constructor(private shopService: ShopService) { }
+  constructor(private shopService: ShopService) {}
 
   ngOnInit(): void {
     this.getBrands();
@@ -32,28 +32,27 @@ export class ShopComponent implements OnInit {
 
   getProducts() {
     this.shopService.getProducts(this.shopParams).subscribe({
-      next: response => {
-
+      next: (response) => {
         this.products = response.data;
         this.shopParams.pageNumber = response.pageIndex;
         this.shopParams.pageSize = response.pageSize;
         this.totalCount = response.count;
       },
-      error: err => console.log(err)
+      error: (err) => console.log(err),
     });
   }
 
   getBrands() {
     this.shopService.getBrands().subscribe({
-      next: response => this.brands = [{ id: 0, name: 'All' }, ...response],
-      error: err => console.log(err)
+      next: (response) => (this.brands = [{ id: 0, name: 'All' }, ...response]),
+      error: (err) => console.log(err),
     });
   }
 
   getTypes() {
     this.shopService.getTypes().subscribe({
-      next: response => this.types = [{ id: 0, name: 'All' }, ...response],
-      error: err => console.log(err)
+      next: (response) => (this.types = [{ id: 0, name: 'All' }, ...response]),
+      error: (err) => console.log(err),
     });
   }
 
